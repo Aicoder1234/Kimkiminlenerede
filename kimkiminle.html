@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="tr"> 
+<head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>Rastgele Cümle Üretici</title> 
+  <link rel="stylesheet" href="style.css"> 
+<style type="text/css" id="dcoder_stylesheet">/* Genel stil ve animasyon ayarları */
+body {
+    font-family: 'Verdana', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #2c2c54, #1b1b3a, #1a1a2e);
+    background-size: 200% 200%;
+    animation: bgShift 8s ease infinite;
+    color: #000000;
+    overflow: hidden;
+}
+
+@keyframes bgShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.container {
+    text-align: center;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    animation: fadeInScale 0.5s ease forwards;
+    position: relative;
+}
+
+@keyframes fadeInScale {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+h1 {
+    font-size: 1.8em;
+    margin: 0;
+    animation: textColorChange 4s infinite alternate;
+}
+
+@keyframes textColorChange {
+    0% { color: #ff8a80; }
+    25% { color: #ea80fc; }
+    50% { color: #80d8ff; }
+    75% { color: #ccff90; }
+    100% { color: #ff9e80; }
+}
+
+button {
+    padding: 12px 24px;
+    font-size: 1em;
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(45deg, #ff6b6b, #f0e68c);
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.cumle-text {
+    font-size: 1.3em;
+    margin-top: 20px;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    color: #ffffff;
+    
+}
+
+/* Emoji patlama animasyonları */
+.emoji {
+    font-size: 1.5em;
+    position: absolute;
+    animation: floatEmojis 1s ease forwards;
+    pointer-events: none;
+}
+
+@keyframes floatEmojis {
+    0% { transform: scale(0.6) translateY(0); opacity: 1; }
+    100% { transform: scale(1.2) translateY(-100px); opacity: 0; }
+}</style></head> 
+<body> 
+  <div class="container"> 
+    <h1>Kim, kiminle, nerede, ne yapıyor?</h1> 
+    <button id="emojiButton">Başla</button> 
+    <p id="cumle" class="cumle-text">Bu bir oyun projesi için özel stil.</p> 
+  </div> 
+  <script src="script.js"></script> 
+
+<script type="text/javascript" id="dcoder_script">// Cümle bileşenleri
+const kimler = ["Ahmet", "Mehmet", "Ayşe", "Elif", "Ali", "Zeynep"];
+const kiminle = [
+    "Mehmet'le", "Ayşe ile", "Ali ile", "Elif ile", "Zeynep ile", "Ahmet'le", "keloğlan", "leyla", "mecnun", 
+    "şirin baba", "temel reis", "kara murat", "tarzan", "hacivat", "karagöz", "red kit", "rıza baba", "he-man", 
+    "nuri alço", "şirinler", "snoopy", "nasreddin hoca", "garfield", "mahmut hoca", "inek şaban", "çakmaktaş fred", 
+    "bugs bunny", "ökkeş", "koca yusuf", "zeyna", "silvester", "tarkan", "tosun paşa", "tom", "jerry", 
+    "dalton kardeşler", "recep ivedik", "ali baba", "sünger bob", "dedektif gadget", "çelik bilek", "ninja kaplumbağalar", 
+    "balıkçı osman", "uzun eşek ebesi", "çakır", "mandrake", "hayalet avcıları", "hüdaverdi", "çöpçüler kralı", 
+    "zaloğlu rüstem", "vecihi", "batman", "kaptan haddock"
+];
+const nerede = [
+    "parkta", "sinemada", "okulda", "kafede", "evde", "bahçede", "halay ortasında", "çöp konteynerinde", 
+    "yangın merdiveninde", "asansörde sıkışmış halde", "dolmuşun bagajında", "turşu kavanozunun içinde", 
+    "bir düğün pastasının üstünde", "kaykay pistinin ortasında", "antika dükkanının deposunda", "kaplumbağa yarışında", 
+    "lunapark dönme dolabında mahsur kalmış", "bir bataklıkta lastik çizmeleriyle", "kütüphane raflarının tepesinde", 
+    "tavuk kümesinde", "tarihi bir heykelin arkasına saklanmış", "dinozor maketinin içinde", "plajda mısır arabası yanında", 
+    "film setinde figüran gibi davranırken", "balonun içinde şişirilmiş halde", "yoğurt reyonunda saklanırken", 
+    "mini golf sahasında", "kafede masa altında uyuklarken", "inşaat iskelelerinde gezerken", "koşu bandında ters yöne giderken", 
+    "açık hava konserinde bateri setinin arkasında", "müzede heykel gibi poz verirken", "sauna kapısının önünde beklerken", 
+    "karnaval çadırının arkasında", "selfie çubuğunun ucunda", "otomatın içine sıkışmış kola alırken", 
+    "gökdelenin çatısında martıları beslerken", "yoga matının üstünde ters dönmüş halde", "sahne perdesinin arkasına gizlenmiş", 
+    "serinlemek için buzdolabının içinde", "lunapark çarpışan arabalar içinde", "paten pistinin ortasında düşmüş", 
+    "kum havuzunda kaybolmuş halde", "sokakta bando ekibine katılmış", "arkeoloji kazı alanında 'define bulacak' diye kazarken", 
+    "dağ tırmanışı eğitiminde uyuyakalırken", "havaalanında bavul taşıyıcı kemerin üstünde giderken", 
+    "çamaşır makinesine kıyafetlerini doldurmaya çalışırken", "eski bir tren garının peronunda beklerken", 
+    "kahve dükkanının terasında gölge yaparken", "botanik bahçesinde ağaçları sayarken", "gece kulübünde DJ kabininin içinde", 
+    "kapalı bir akvaryum tankının içinde balık gibi poz verirken", "beyzbol sahasında sopayla dengesini kaybetmiş", 
+    "kayak merkezinde kızak kayarken", "otoyol kenarında aniden durup kelebek yakalamaya çalışırken"
+];
+const neYapiyor = [
+    "müzik dinliyor", "koşuyor", "kitap okuyor", "sohbet ediyor", "oyun oynuyor", "çay içiyor", "tavana bakarak bağırıyor", 
+    "spagettiyle saçlarını tarıyor", "gökyüzüne kahve fırlatıyor", "sandalyeyi evcilleştirmeye çalışıyor", "kedisine matematik öğretiyor", 
+    "gölgesine yumruk atıyor", "salataya moral veriyor", "buzdolabına şiir okuyor", "gözlüğünü tersten takıyor", 
+    "patateslerle arkadaşlık kuruyor", "halıya selfie çekiyor", "ayakkabılara çorap giydiriyor", "sulara sesleniyor, 'yavaş ak!'", 
+    "bir portakalla tartışıyor", "kitapları uyutmaya çalışıyor", "limonata ile şarkı söylüyor", "dolabını dans pistine çeviriyor", 
+    "çiçeklere rap yapıyor", "ayakkabı bağcıklarıyla körebe oynuyor", "tabaklarla sohbet ediyor", "kendi yansımasına göz kırpıyor", 
+    "sandalyeyi ters oturmuş gibi yapıyor", "bardaklardan kule yapıyor", "çayı tabaktan içmeye çalışıyor", "halıya 'iyi geceler' diyor", 
+    "elmalı tart ile yarışıyor", "duvardaki çatlakları sayıyor", "kitap sayfalarına kahve döküyor, 'enerji versin' diye", 
+    "dolaptaki yoğurtlarla dans ediyor", "çamaşır makinesine moral konuşması yapıyor", "televizyonla fısıldaşarak konuşuyor", 
+    "koltuk minderlerini numaralandırıyor", "tabakları disk atma yarışına sokuyor", "kafasına şapka yerine bir kase koyuyor", 
+    "fincana şapka örüyor", "ayaklarını perdeye asıp bekliyor", "çatal-bıçakla orkestra şefi gibi davranıyor", 
+    "sehpayla taş-kağıt-makas oynuyor", "yastıklara 'sizi seviyorum' diyor", "muslukla arkadaşça tartışıyor", 
+    "telefonla şarkı söyler gibi konuşuyor", "çoraplarını bardakların içine koyuyor", "dolaba not bırakıyor: 'Bu gece geç geleceğim'", 
+    "yoğurdu resmetmeye çalışıyor", "kalemleri sıraya diziyor", "kendi gölgesine selam veriyor", "gazeteyi tersten okuyor", 
+    "küçük mutfak aletlerini bir araya toplayıp parti düzenliyor", "eline sandalye alıp 'düşünceli düşünceler' diyor", 
+    "yerde oturup halıya resim anlatıyor"
+];
+
+// Rastgele cümle oluşturma ve gösterme
+function rastgeleCumleOlustur() {
+    const cumle = `${kimler[Math.floor(Math.random() * kimler.length)]} ${kiminle[Math.floor(Math.random() * kiminle.length)]} ${nerede[Math.floor(Math.random() * nerede.length)]} ${neYapiyor[Math.floor(Math.random() * neYapiyor.length)]}.`;
+    document.getElementById("cumle").innerText = cumle;
+}
+function rastgeleCumleOlustur() {
+    const cumle = `${kimler[Math.floor(Math.random() * kimler.length)]} ${kiminle[Math.floor(Math.random() * kiminle.length)]} ${nerede[Math.floor(Math.random() * nerede.length)]} ${neYapiyor[Math.floor(Math.random() * neYapiyor.length)]}.`;
+    const cumleElement = document.getElementById("cumle");
+    cumleElement.innerText = cumle;
+    cumleElement.style.opacity = 1;  // Opaklığı görünür yapıyoruz
+}
+// Butona tıklama olayı ekleme
+document.getElementById("emojiButton").addEventListener("click", rastgeleCumleOlustur);</script></body></html>
